@@ -1,0 +1,1 @@
+"SELECT ?person ?person2 ?person3 ?person4 ?personLabel ?person2Label ?person3Label ?person4Label WHERE {?person (wdt:P22|wdt:P25|wdt:P40) wd:+ "person" +. ?person2 (wdt:P22|wdt:P25|wdt:P40)? ?person. ?person3 (wdt:P22|wdt:P25|wdt:P40)? ?person2. ?person4 (wdt:P22|wdt:P25|wdt:P40)? ?person3. SERVICE wikibase:label { bd:serviceParam wikibase:language '[AUTO_LANGUAGE],en'. } }"
