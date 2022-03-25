@@ -105,7 +105,7 @@ class Tree:
                 self.bnr(self.q, self.toInt(codes[j]))
 
         #Wait before the next query.
-        time.sleep(2)
+        time.sleep(5)
         return 0
 
 
@@ -211,7 +211,7 @@ class Tree:
 tree = Tree()
 tree.load()
 tree.expand()
-#print(tree.bfs(tree.G, "Q708703", "Q110934805"))
+#print(tree.bfs(tree.G, "Q708703", "Q111320602"))
 
 """ degrees = [val for (node, val) in G.degree()]
 bar = []
