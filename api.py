@@ -20,15 +20,16 @@ def fetch(root, generations):
     t = time.time()
     r = requests.get("https://query.wikidata.org/sparql?query=" + urlquery, headers=headers)
     queryTime = time.time() - t
+    items = []
 
     #Return error if the query failed
     if r.status_code == 429:
         print(r.text)
         print(r.status_code)
-        return 0
+        items.append(queryTime)
+        return items
 
     result = r.json()
-    items = []
     items.append(queryTime)
 
     #Saves all names and wikidata codes of all the resulting people

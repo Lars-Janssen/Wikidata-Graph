@@ -1,4 +1,5 @@
 from os import remove
+from pkgutil import get_data
 from networkx.algorithms.shortest_paths.generic import shortest_path
 import api
 import networkx as nx
@@ -63,9 +64,14 @@ class Tree:
         main = "Q" + str(self.q.pop(0))
         result = api.fetch(main, self.generations)
         print(self.G.number_of_nodes())
+        print(result[0])
 
         #Save every 1000 nodes.
-        if result == 0 or self.G.number_of_nodes() - self.last_save > 1000:
+        if len(result) == 1:
+            self.last_save = self.G.number_of_nodes()
+            self.save()
+
+        if self.G.number_of_nodes() - self.last_save > 1000:
             self.last_save = self.G.number_of_nodes()
             self.save()
 
@@ -101,6 +107,7 @@ class Tree:
                 if all[j] != all[j+1]:
                     self.G.add_edge(all[j], all[j+1])
 
+            #Remove duplicates from the queue
             for j in range(self.generations - 1):
                 self.bnr(self.q, self.toInt(codes[j]))
 
@@ -123,7 +130,7 @@ class Tree:
 
     def save(self):
         """
-            Save the graph, list of nodes, and queue.
+            Save the graph, queue, and list of nodes.
         """
         #Save the graph.
         nx.write_graphml(self.G, "G.graphml")
@@ -210,12 +217,12 @@ class Tree:
 
 tree = Tree()
 tree.load()
-tree.expand()
-#print(tree.bfs(tree.G, "Q708703", "Q111320602"))
+#tree.expand()
+#print(tree.bfs(tree.G, "Q346", "Q111320602"))
 
-""" degrees = [val for (node, val) in G.degree()]
+""" degrees = [val for (_, val) in tree.G.degree()]
 bar = []
-for i in G.degree():
+for i in tree.G.degree():
     if i[1] == 0:
         print(i[0])
 
@@ -223,5 +230,7 @@ for i in range(max(degrees) + 1):
     bar.append(degrees.count(i))
 print(bar) """
 
+for n in tree.G.nodes():
+    print(n)
+
 #nx.draw(G)
-#plt.show()
